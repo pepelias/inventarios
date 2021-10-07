@@ -1,0 +1,84 @@
+*,
+*::before,
+*:after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--bg-color);
+  color: var(--content-color);
+}
+h1,
+.title,
+.t1 {
+  font: var(--font-title);
+}
+h2,
+.subtitle,
+.t2 {
+  font: var(--font-subtitle);
+}
+.up-title {
+  font: var(--font-up-title);
+}
+.up-content {
+  font: var(--font-up-content);
+}
+
+label {
+  display: block;
+  font: var(--font-metadata);
+  font-size: var(--fs-subcontent);
+  color: var(--metadata-color);
+  margin-bottom: $margin * 2;
+  &:focus-within {
+    color: var(--content-color);
+  }
+}
+input,
+select,
+textarea,
+[contenteditable] {
+  display: block;
+  padding: $padding;
+  width: 100%;
+  border: 0;
+  border-bottom: $border;
+  background: transparent;
+  outline: 0;
+  color: inherit;
+  font-size: var(--fs-content);
+  &:focus {
+    border-color: var(--content-color);
+  }
+}
+
+button,
+.button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  cursor: pointer;
+  padding: $padding * 1.5 $radius + $padding;
+  border: 0;
+  border-radius: $radius;
+  background: var(--content-color);
+  color: var(--bg-color);
+  font: var(--font-buttons);
+  margin: auto;
+  box-shadow: $radiance;
+  &.super {
+    padding: $margin;
+    width: 80%;
+    font: var(--font-title);
+    font-size: var(--fs-up-content);
+  }
+}
+
+ul,
+ol {
+  list-style: none;
+}

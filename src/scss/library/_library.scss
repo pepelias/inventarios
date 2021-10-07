@@ -1,0 +1,154 @@
+$breakpoints: (
+  s: 0,
+  m: 40rem,
+  lg: 64rem,
+  xl: 90rem,
+) !default;
+
+$aligns: left, center, right;
+$positions: (
+  end: end,
+  start: start,
+  center: center,
+);
+$verticals: (
+  top: start,
+  middle: center,
+  bottom: end,
+);
+@mixin box-rules($property, $value) {
+  $axies: (
+    y: (
+      t: top,
+      b: bottom,
+    ),
+    x: (
+      l: left,
+      r: right,
+    ),
+  );
+  @each $axis, $sides in $axies {
+    @each $abbr, $side in $sides {
+      @include responsive(
+        $property,
+        #{$property}-#{$axis},
+        #{$property}-#{$abbr},
+        #{$property}-#{$side}
+      ) {
+        #{$property}-#{$side}: $value;
+        @if (type-of($value) == number) {
+          &-0 {
+            #{$property}-#{$side}: 0;
+          }
+
+          &-05 {
+            #{$property}-#{$side}: $value / 2;
+          }
+
+          &-2 {
+            #{$property}-#{$side}: $value * 2;
+          }
+
+          &-3 {
+            #{$property}-#{$side}: $value * 3;
+          }
+
+          &-auto {
+            #{$property}-#{$side}: auto;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Recorredor
+@mixin eacher($paring, $class) {
+  @each $prefix, $size in $breakpoints {
+    @if $paring {
+      &.#{$prefix}-#{$class} {
+        @include from-bp($prefix) {
+          @content;
+        }
+      }
+    } @else {
+      .#{$prefix}-#{$class} {
+        @include from-bp($prefix) {
+          @content;
+        }
+      }
+    }
+  }
+}
+
+// Generar libreria responsive
+@mixin responsive($classes...) {
+  $paring: false;
+  @each $class in $classes {
+    @if $class == '&' or $class == & {
+      $paring: true;
+    } @else {
+      @if $paring {
+        &.#{$class} {
+          @content;
+        }
+      } @else {
+        .#{$class} {
+          @content;
+        }
+      }
+      @include eacher($paring, $class) {
+        @content;
+      }
+    }
+  }
+}
+
+@mixin from-bp($breakpoint) {
+  $bp: $breakpoint;
+  @if map-has-key($breakpoints, $breakpoint) {
+    $bp: map-get($breakpoints, $breakpoint);
+  }
+  @if type-of($bp) == number {
+    @media (min-width: $bp) {
+      @content;
+    }
+  }
+}
+@mixin to-bp($breakpoint) {
+  $bp: $breakpoint;
+  @if map-has-key($breakpoints, $breakpoint) {
+    $bp: map-get($breakpoints, $breakpoint);
+  }
+  @if type-of($bp) == number {
+    @media (max-width: $bp) {
+      @content;
+    }
+  }
+}
+
+// Alineaciones
+@mixin helpers {
+  @each $pos in $aligns {
+    @include responsive(align-#{$pos}) {
+      text-align: $pos;
+    }
+  }
+  // Alineaciones box
+  @each $clss, $val in $positions {
+    @include responsive(to-#{$clss}) {
+      justify-content: $val;
+    }
+  }
+  // Alineaciones vericales box
+  @each $clss, $val in $verticals {
+    @include responsive(to-#{$clss}) {
+      align-items: $val;
+    }
+  }
+  // Paddings
+  @include box-rules(padding, $padding);
+  @include box-rules(margin, $margin);
+  @include box-rules(border, $border);
+}
+@include helpers();

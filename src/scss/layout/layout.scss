@@ -1,0 +1,42 @@
+.main-navigator {
+  padding: $padding * 2 $padding;
+  display: flex;
+  justify-content: center;
+}
+.main-header {
+  padding: $padding * 2;
+}
+.dashboard {
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+}
+
+.modal-page {
+  background: var(--content-color);
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  &__header {
+    color: var(--bg-color);
+    display: flex;
+    align-items: center;
+    padding: 3em $padding;
+    a {
+      text-decoration: none;
+      color: var(--bg-color);
+      font-size: var(--fs-up-content);
+    }
+    h1 {
+      font-weight: bold;
+      font-size: var(--fs-up-content);
+      width: 100%;
+      text-align: center;
+    }
+  }
+  &__content {
+    padding: $padding * 2;
+    background: var(--bg-color);
+    border-radius: $radius;
+  }
+}

@@ -1,0 +1,45 @@
+$padding: 10px;
+$margin: $padding * 2;
+$border: 1px solid var(--border-color);
+$radius: 12px;
+$shadow: 0 10px 15px -5px rgba(#000, 0.3);
+$radiance: 0 0 20px rgba(#fff, 0.3);
+
+:root {
+  --bg-color: #202635;
+  --border-color: #ffffff33;
+  --metadata-color: #d9d9d9;
+  --content-color: #fff;
+  --container-gradient: linear-gradient(to bottom, #202433, #1f2430, #262b3a);
+  --container-color: #292f3f;
+  --warning-color: #f15223;
+  --error-color: #de2c2c;
+
+  // Efectos
+  --shadow: 14px 18px 34px rgba(#000, 0.32);
+  --shadow-top: 14px -18px 34px rgba(#000, 0.32);
+
+  // Fuentes
+  --fs-metadata: 0.68rem;
+  --fs-subcontent: 0.87rem;
+  --fs-content: 1rem;
+  --fs-up-content: 1.125rem;
+  --fs-buttons: 1.25rem;
+  --fs-title: 1.5rem;
+  --fs-up-title: 1.75rem;
+
+  // Font
+  --font-metadata: normal var(--fs-metadata) / 1.2em var(--ff-content);
+  --font-content: normal var(--fs-content) / 1.2em var(--ff-content);
+  --font-up-content: normal var(--fs-up-content) / 1em var(--ff-content);
+  --font-buttons: bold var(--fs-buttons) / 1em var(--ff-content);
+  --font-subtitle: normal var(--fs-title) / 1em var(--ff-title);
+  --font-title: bold var(--fs-title) / 1em var(--ff-title);
+  --font-up-title: 800 var(--fs-up-title) / 1em var(--ff-title);
+
+  // Tipografías
+  --ff-content: 'Mulish', sans-serif;
+  --ff-title: 'Mulish', sans-serif;
+
+  font: var(--font-content);
+}
