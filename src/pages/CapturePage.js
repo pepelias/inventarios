@@ -16,7 +16,7 @@ export const CapturePage = () => {
           target: viewport.current, // Or '#yourElement' (optional)
         },
         decoder: {
-          readers: ['ean_reader'],
+          readers: ['ean_reader', 'upc_reader'],
         },
       },
       function (err) {
