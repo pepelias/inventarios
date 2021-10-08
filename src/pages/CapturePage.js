@@ -16,7 +16,7 @@ export const CapturePage = () => {
           target: viewport.current, // Or '#yourElement' (optional)
         },
         decoder: {
-          readers: ['upc_reader'],
+          readers: ['ean_reader'],
         },
       },
       function (err) {
@@ -24,15 +24,15 @@ export const CapturePage = () => {
           console.log(err)
           return
         }
-        alert('Leeremos upc simple')
+        alert('Leeremos ean')
         console.log('Initialization finished. Ready to start')
         Quagga.start()
       }
     )
     Quagga.onDetected((res) => {
-      Quagga.stop()
       setCode(res.codeResult.code)
       history.push(`/make/${res.codeResult.code}`)
+      Quagga.stop()
     })
   }, [viewport])
   return (
