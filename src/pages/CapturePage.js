@@ -24,7 +24,6 @@ export const CapturePage = () => {
           console.log(err)
           return
         }
-        alert('Leeremos ean')
         console.log('Initialization finished. Ready to start')
         Quagga.start()
       }
