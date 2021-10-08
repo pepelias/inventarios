@@ -16,7 +16,7 @@ export const CapturePage = () => {
           target: viewport.current, // Or '#yourElement' (optional)
         },
         decoder: {
-          readers: ['upc_e_reader'],
+          readers: ['upc_reader'],
         },
       },
       function (err) {
@@ -24,7 +24,7 @@ export const CapturePage = () => {
           console.log(err)
           return
         }
-        alert('Leeremos upc')
+        alert('Leeremos upc simple')
         console.log('Initialization finished. Ready to start')
         Quagga.start()
       }
