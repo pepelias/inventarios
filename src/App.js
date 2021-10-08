@@ -4,6 +4,7 @@ import { MakeRegister } from './pages/MakeRegister'
 import { Provider } from 'react-redux'
 import store from './redux/store'
 import './scss/main.scss'
+import { CapturePage } from './pages/CapturePage'
 
 function App() {
   return (
@@ -11,7 +12,8 @@ function App() {
       <Router>
         <Switch>
           <Route path="/" component={DashboardPage} exact />
-          <Route path="/make" component={MakeRegister} exact />
+          <Route path="/capture" component={CapturePage} exact />
+          <Route path="/make/:code" component={MakeRegister} exact />
         </Switch>
       </Router>
     </Provider>

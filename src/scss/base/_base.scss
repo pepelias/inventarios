@@ -82,3 +82,9 @@ ul,
 ol {
   list-style: none;
 }
+
+img,
+video {
+  display: block;
+  // max-width: 100%;
+}

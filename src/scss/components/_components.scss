@@ -79,3 +79,16 @@
   grid-template-columns: 1fr 30%;
   gap: 1em;
 }
+
+.modal-footer {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: $margin;
+  padding: $margin;
+  background: var(--container-color);
+  border-radius: $radius * 2;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}

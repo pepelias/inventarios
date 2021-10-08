@@ -4,7 +4,7 @@ import { Link, useHistory } from 'react-router-dom'
 import useField from '../hooks/useField'
 import { addProduct } from '../redux/actionCreators'
 
-export const MakeRegister = () => {
+export const MakeRegister = ({ match }) => {
   const name = useField('')
   const date = useField('')
   const qty = useField('')
@@ -35,7 +35,7 @@ export const MakeRegister = () => {
         <h1>Añadir nuevo producto</h1>
       </header>
       <form className="modal-page__content" onSubmit={onSubmit}>
-        <h2 className="align-center margin-y-2">Code: 11 234 2333 23</h2>
+        <h2 className="align-center margin-y-2">Code: {match.params.code}</h2>
         <label>
           Nombre del producto:
           <input type="text" {...name} required autoFocus />
