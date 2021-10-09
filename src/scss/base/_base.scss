@@ -76,6 +76,11 @@ button,
     font: var(--font-title);
     font-size: var(--fs-up-content);
   }
+  &.only-icon {
+    background: transparent;
+    box-shadow: none;
+    color: var(--content-color);
+  }
 }
 
 ul,

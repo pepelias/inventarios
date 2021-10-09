@@ -92,3 +92,40 @@
   bottom: 0;
   width: 100%;
 }
+
+.modal {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: rgba(#000, 0.5);
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: $padding;
+  &__container {
+    width: 100%;
+    height: fit-content;
+    border-radius: $radius;
+    background: var(--container-color);
+    padding: $padding;
+  }
+}
+
+.tabs-sections-container {
+  > :not(.active) {
+    display: none;
+  }
+}
+
+.buttons-container {
+  display: flex;
+  justify-content: center;
+  gap: $padding;
+  button,
+  .button {
+    margin: 0;
+  }
+}

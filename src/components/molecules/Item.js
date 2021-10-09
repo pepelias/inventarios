@@ -1,6 +1,6 @@
 import { ShoppingCartOutlined } from '@ant-design/icons'
 
-export const Item = ({ name, qty, unit, expiration }) => {
+export const Item = ({ name, quantity, unit, expirationDate }) => {
   return (
     <div className="product-item">
       <div className="product-item__cover">
@@ -10,10 +10,10 @@ export const Item = ({ name, qty, unit, expiration }) => {
         <h1>{name}</h1>
         <p>
           <span>
-            Stock: {qty}
+            Stock: {quantity}
             {unit}
           </span>
-          <span>Vence: {expiration}</span>
+          <span>Vence: {expirationDate}</span>
         </p>
       </div>
     </div>

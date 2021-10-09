@@ -1,28 +1,17 @@
 import { LeftOutlined } from '@ant-design/icons'
-import { useDispatch } from 'react-redux'
 import { Link, useHistory } from 'react-router-dom'
-import useField from '../hooks/useField'
+import { StepsForm } from '../components/organisms/StepsForm'
+import { ProductStockForm } from '../components/organisms/makeRegister/ProductStockForm'
+import { ProductConfigForm } from '../components/organisms/makeRegister/ProductConfigForm'
 import { addProduct } from '../redux/actionCreators'
+import { useDispatch } from 'react-redux'
 
 export const MakeRegister = ({ match }) => {
-  const name = useField('')
-  const date = useField('')
-  const qty = useField('')
-  const unit = useField('')
-  const comment = useField('')
   const dispatch = useDispatch()
   const history = useHistory()
-
-  const onSubmit = (e) => {
-    e.preventDefault()
-    const save = {
-      name: name.value,
-      expiration: date.value,
-      qty: qty.value,
-      unit: unit.value,
-      comment: comment.value,
-    }
-    dispatch(addProduct(save))
+  const onSubmit = (data) => {
+    console.log('Añadir producto', data)
+    dispatch(addProduct({ ...data, code: match.params.code }))
     history.push('/')
   }
 
@@ -34,37 +23,13 @@ export const MakeRegister = ({ match }) => {
         </Link>
         <h1>Añadir nuevo producto</h1>
       </header>
-      <form className="modal-page__content" onSubmit={onSubmit}>
-        <h2 className="align-center margin-y-2">Code: {match.params.code}</h2>
-        <label>
-          Nombre del producto:
-          <input type="text" {...name} required autoFocus />
-        </label>
-        <label>
-          Fecha de expiración:
-          <input type="date" required {...date} />
-        </label>
-        <div className="grid-left">
-          <label>
-            Cantidad:
-            <input type="number" required {...qty} />
-          </label>
-          <label>
-            Medida:
-            <select type="text" {...unit}>
-              <option value="kg">Kg</option>
-              <option value="lt">Lt</option>
-              <option value="g">G</option>
-            </select>
-          </label>
-        </div>
-        <label>
-          Comentario (opcional):
-          <textarea {...comment} />
-        </label>
-
-        <button className="super margin-t-3">Guardar</button>
-      </form>
+      <div className="modal-page__content">
+        <h2 className="align-center margin-b-2">Code: {match.params.code}</h2>
+        <StepsForm
+          steps={[ProductStockForm, ProductConfigForm]}
+          onSubmit={onSubmit}
+        />
+      </div>
     </main>
   )
 }
