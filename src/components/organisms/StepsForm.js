@@ -28,15 +28,15 @@ export const StepsForm = ({ steps = [], onSubmit }) => {
             onSubmit={stepSubmit}
           >
             <StepComponent currentData={currentData} />
-            <div className="buttons-container padding margin-t-2">
+            <div className="buttons-container invert padding margin-t-2">
+              <button>
+                {i === steps.length - 1 ? 'Completar' : 'Continuar'}
+              </button>
               {i > 0 && (
                 <button className="only-icon" onClick={back}>
                   <ArrowLeftOutlined />
                 </button>
               )}
-              <button>
-                {i === steps.length - 1 ? 'Completar' : 'Continuar'}
-              </button>
             </div>
           </form>
         )

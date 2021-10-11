@@ -23,9 +23,7 @@ export const CapturePage = () => {
         },
         decoder: {
           readers: ['ean_reader', 'upc_reader'],
-          multiple: true,
         },
-        multiple: true,
       },
       function (err) {
         if (err) {
@@ -37,6 +35,7 @@ export const CapturePage = () => {
       }
     )
     Quagga.onDetected((res) => {
+      console.log(res)
       setCode(res.codeResult.code)
     })
   }, [viewport])

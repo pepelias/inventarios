@@ -5,13 +5,24 @@ import { ProductStockForm } from '../components/organisms/makeRegister/ProductSt
 import { ProductConfigForm } from '../components/organisms/makeRegister/ProductConfigForm'
 import { addProduct } from '../redux/actionCreators'
 import { useDispatch } from 'react-redux'
+import { calcExpirationDate } from '../helpers/calcExpiration'
 
 export const MakeRegister = ({ match }) => {
   const dispatch = useDispatch()
   const history = useHistory()
   const onSubmit = (data) => {
-    console.log('Añadir producto', data)
-    dispatch(addProduct({ ...data, code: match.params.code }))
+    const expirationDate = new Date(data.expiration_date).getTime()
+    dispatch(
+      addProduct({
+        ...data,
+        expiration_date: expirationDate,
+        expiration_alert_date: calcExpirationDate(
+          expirationDate,
+          data.expiration_time_alert
+        ),
+        code: match.params.code,
+      })
+    )
     history.push('/')
   }
 

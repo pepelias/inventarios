@@ -37,6 +37,19 @@
   }
   p {
     font: var(--font-metadata);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1em;
+    .warning,
+    .error {
+      font-weight: bold;
+    }
+    .warning {
+      color: var(--warning-color);
+    }
+    .error {
+      color: var(--error-color);
+    }
   }
   &__cover {
     $size: 50px;
@@ -45,9 +58,15 @@
     align-items: center;
     width: $size;
     height: $size;
-    background: var(--warning-color);
+    background: var(--container-color);
     border-radius: $radius;
     font-size: 30px;
+    &.warning {
+      background: var(--warning-color);
+    }
+    &.error {
+      background: var(--error-color);
+    }
   }
 }
 
@@ -127,5 +146,8 @@
   button,
   .button {
     margin: 0;
+  }
+  &.invert {
+    flex-direction: row-reverse;
   }
 }

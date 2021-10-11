@@ -54,6 +54,9 @@ textarea,
     border-color: var(--content-color);
   }
 }
+option {
+  color: var(--bg-color);
+}
 
 button,
 .button {

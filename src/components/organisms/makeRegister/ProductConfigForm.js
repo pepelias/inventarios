@@ -1,4 +1,5 @@
 import React from 'react'
+import { units } from '../../../helpers/dictionary'
 
 export const ProductConfigForm = ({ currentData }) => {
   return (
@@ -6,18 +7,17 @@ export const ProductConfigForm = ({ currentData }) => {
       <h3 className="margin-b">Configurar alertas del producto:</h3>
       <div className="grid-left">
         <label>
-          ¿Cuanto es considerado poco stock?
+          ¿Cuanto es poco stock?
           <input type="number" name="low_stock_alert" autoFocus />
         </label>
         <label>
           Medida:
           <select value={currentData.unit} disabled>
-            <option value="kg">KG</option>
-            <option value="lts">LTS</option>
-            <option value="paquetes">PAQUETES</option>
-            <option value="unidades">UNIDADES</option>
-            <option value="cajas">CAJAS</option>
-            <option value="bolsas">BOLSAS</option>
+            {Object.entries(units).map(([unit, label]) => (
+              <option key={unit} value={unit}>
+                {label}
+              </option>
+            ))}
           </select>
         </label>
       </div>

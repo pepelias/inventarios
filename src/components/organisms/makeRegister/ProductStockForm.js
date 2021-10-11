@@ -1,3 +1,5 @@
+import { units } from '../../../helpers/dictionary'
+
 export const ProductStockForm = () => {
   return (
     <>
@@ -7,7 +9,7 @@ export const ProductStockForm = () => {
       </label>
       <label>
         Fecha de expiración:
-        <input type="date" name="expirationDate" required />
+        <input type="date" name="expiration_date" required />
       </label>
       <div className="grid-left">
         <label>
@@ -17,12 +19,11 @@ export const ProductStockForm = () => {
         <label>
           Medida:
           <select name="unit">
-            <option value="kg">KG</option>
-            <option value="lts">LTS</option>
-            <option value="paquetes">PAQUETES</option>
-            <option value="unidades">UNIDADES</option>
-            <option value="cajas">CAJAS</option>
-            <option value="bolsas">BOLSAS</option>
+            {Object.entries(units).map(([unit, label]) => (
+              <option key={unit} value={unit}>
+                {label}
+              </option>
+            ))}
           </select>
         </label>
       </div>
