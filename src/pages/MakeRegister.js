@@ -6,18 +6,22 @@ import { ProductConfigForm } from '../components/organisms/makeRegister/ProductC
 import { addProduct } from '../redux/actionCreators'
 import { useDispatch } from 'react-redux'
 import { calcExpirationDate } from '../helpers/calcExpiration'
+import {
+  ProductExpirationForm,
+  ProductExpirationFormHandler,
+} from '../components/organisms/makeRegister/ProductExpirationForm'
 
 export const MakeRegister = ({ match }) => {
   const dispatch = useDispatch()
   const history = useHistory()
   const onSubmit = (data) => {
-    const expirationDate = new Date(data.expiration_date).getTime()
+    console.log(data)
     dispatch(
       addProduct({
         ...data,
-        expiration_date: expirationDate,
+        low_stock_alert: parseInt(data.low_stock_alert),
         expiration_alert_date: calcExpirationDate(
-          expirationDate,
+          data.expiration,
           data.expiration_time_alert
         ),
         code: match.params.code,
@@ -37,7 +41,13 @@ export const MakeRegister = ({ match }) => {
       <div className="modal-page__content">
         <h2 className="align-center margin-b-2">Code: {match.params.code}</h2>
         <StepsForm
-          steps={[ProductStockForm, ProductConfigForm]}
+          steps={{ ProductStockForm, ProductExpirationForm, ProductConfigForm }}
+          handlers={{ ProductExpirationForm: ProductExpirationFormHandler }}
+          order={[
+            'ProductStockForm',
+            'ProductExpirationForm',
+            'ProductConfigForm',
+          ]}
           onSubmit={onSubmit}
         />
       </div>

@@ -79,10 +79,15 @@ button,
     font: var(--font-title);
     font-size: var(--fs-up-content);
   }
-  &.only-icon {
+  &.only-icon,
+  &.icon {
     background: transparent;
     box-shadow: none;
     color: var(--content-color);
+  }
+  &.icon {
+    padding: 0;
+    margin: 0;
   }
 }
 
@@ -95,4 +100,8 @@ img,
 video {
   display: block;
   max-width: 100%;
+}
+
+a {
+  color: var(--metadata-color);
 }

@@ -8,3 +8,11 @@ export const products = (state = [], { type, data }) => {
       return state
   }
 }
+export const alertedProducts = (state = [], { type, data }) => {
+  switch (type) {
+    case actions.ADD_ALERTED_PRODUCT:
+      return [...state, data]
+    default:
+      return state
+  }
+}

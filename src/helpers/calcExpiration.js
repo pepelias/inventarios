@@ -1,24 +1,21 @@
 import { DATE_UNITS } from './getTimeAgo'
+const day = DATE_UNITS.find(([unit]) => unit === 'day')[1] * 1000
+const month = DATE_UNITS.find(([unit]) => unit === 'month')[1] * 1000
 
-export const calcExpirationDate = (expirationDate, alertTime) => {
-  let discount, discounter
+export const calcExpirationDate = (expiration, alertTime) => {
+  let discount
   switch (alertTime) {
     case '15d':
-      discounter = DATE_UNITS.find(([unit]) => unit === 'day')
-      discount = discounter[1] * 15 * 1000
+      discount = day * 15
       break
     case '1.5m':
-      discounter = DATE_UNITS.find(([unit]) => unit === 'month')
-      discount = discounter[1] * 1.5 * 1000
+      discount = month * 1.5
       break
     case '2m':
-      discounter = DATE_UNITS.find(([unit]) => unit === 'month')
-      discount = discounter[1] * 2 * 1000
+      discount = month * 2
       break
     default:
-      discounter = DATE_UNITS.find(([unit]) => unit === 'month')
-      discount = discounter[1] * 1 * 1000
+      discount = month * 1
   }
-  const alertDate = new Date(expirationDate - discount)
-  return alertDate.getTime()
+  return new Date(expiration - discount).getTime()
 }

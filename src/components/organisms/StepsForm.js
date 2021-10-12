@@ -1,38 +1,54 @@
 import { ArrowLeftOutlined } from '@ant-design/icons'
 import { useState } from 'react'
 
-export const StepsForm = ({ steps = [], onSubmit }) => {
+export const StepsForm = ({ steps = {}, handlers = {}, onSubmit, order }) => {
+  if (!order) order = Object.keys(steps)
+  const first = order[0]
+  const last = order[order.length - 1]
+  const middlewares = {}
   const [current, setCurrent] = useState(0)
   const [currentData, setCurrentData] = useState({})
-  const stepSubmit = (e) => {
+
+  const stepSubmit = (stepName) => (e) => {
     e.preventDefault()
+    let data = Object.fromEntries(new FormData(e.target))
+    if (middlewares[stepName]) data = middlewares[stepName](data)
     const replace = {
       ...currentData,
-      ...Object.fromEntries(new FormData(e.target)),
+      ...(handlers[stepName] ? handlers[stepName](data) : data),
     }
+    console.log('seteado', replace)
     setCurrentData(replace)
-    if (current < steps.length - 1) return setCurrent(current + 1)
+    if (current !== order.length - 1) return setCurrent(current + 1)
     if (onSubmit) onSubmit(replace)
   }
+
+  // Crear middleware
+  const middleware = (stepName) => (fnc) => {
+    middlewares[stepName] = (data) => fnc(data)
+  }
+
   const back = (e) => {
     e.preventDefault()
     if (current > 0) setCurrent(current - 1)
   }
   return (
     <div className="step-forms tabs-sections-container">
-      {steps.map((StepComponent, i) => {
+      {order.map((stepName, index) => {
+        const StepComponent = steps[stepName]
         return (
           <form
-            key={i}
-            className={`step-forms__step${current === i ? ' active' : ''}`}
-            onSubmit={stepSubmit}
+            key={stepName}
+            className={`step-forms__step${current === index ? ' active' : ''}`}
+            onSubmit={stepSubmit(stepName)}
           >
-            <StepComponent currentData={currentData} />
+            <StepComponent
+              currentData={currentData}
+              submitMiddleware={middleware(stepName)}
+            />
             <div className="buttons-container invert padding margin-t-2">
-              <button>
-                {i === steps.length - 1 ? 'Completar' : 'Continuar'}
-              </button>
-              {i > 0 && (
+              <button>{stepName === last ? 'Completar' : 'Continuar'}</button>
+              {stepName !== first && (
                 <button className="only-icon" onClick={back}>
                   <ArrowLeftOutlined />
                 </button>

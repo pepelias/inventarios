@@ -15,8 +15,8 @@ export const DashboardPage = () => {
           <h2 className="up-content">Encargada de bodega</h2>
         </header>
         <TabsNavigator
-          tabs={['Inventario', 'Alertas']}
-          sections={[Inventory, AlertsList]}
+          tabs={['Alertas', 'Inventario']}
+          sections={[AlertsList, Inventory]}
         />
       </div>
       <Footer />

@@ -10,23 +10,12 @@ export const Item = ({
   name,
   quantity,
   unit,
-  expiration_date: expirationDate,
-  expiration_alert_date: expirationAlertDay,
-  low_stock_alert: lowStockAlert,
+  expiration,
+  expirationAlert,
+  stockAlert,
 }) => {
   let clss = ''
   let AlertIcon = CheckCircleOutlined
-  const difference = expirationAlertDay - Date.now()
-  const expirationAlert = (() => {
-    if (expirationDate <= Date.now()) return 'error'
-    if (difference <= 0) return 'warning'
-    return false
-  })()
-  const stockAlert = (() => {
-    if (quantity <= 0) return 'error'
-    if (parseInt(quantity) <= parseInt(lowStockAlert)) return 'warning'
-    return false
-  })()
 
   // Alerta de vencimiento
   if (expirationAlert) {
@@ -61,7 +50,7 @@ export const Item = ({
             {unit}
           </span>
           <span className={expirationAlert || ''}>
-            Vence: {getTimeAgo(expirationDate)}
+            Vence: {getTimeAgo(expiration)}
           </span>
         </p>
       </div>

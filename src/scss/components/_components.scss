@@ -95,8 +95,12 @@
 .grid-left,
 .grid-right {
   display: grid;
-  grid-template-columns: 1fr 30%;
+  grid-template-columns: 1fr 30% auto;
   gap: 1em;
+  > label {
+    display: grid;
+    grid-template-rows: auto 1fr;
+  }
 }
 
 .modal-footer {

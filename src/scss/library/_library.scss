@@ -131,6 +131,7 @@ $verticals: (
 @mixin helpers {
   @each $pos in $aligns {
     @include responsive(align-#{$pos}) {
+      display: block;
       text-align: $pos;
     }
   }
@@ -150,5 +151,9 @@ $verticals: (
   @include box-rules(padding, $padding);
   @include box-rules(margin, $margin);
   @include box-rules(border, $border);
+
+  .metadata-color {
+    color: var(--metadata-color);
+  }
 }
 @include helpers();
