@@ -40,3 +40,10 @@ export const getTimeAgo = (timestamp) => {
     '0' + date.getMinutes()
   ).slice(-2)}`
 }
+
+export const timeToString = (timestamp) => {
+  const date = timestamp ? new Date(timestamp) : new Date()
+  return `${date.getUTCFullYear()}-${('0' + (date.getMonth() + 1)).slice(
+    -2
+  )}-${('0' + date.getDate()).slice(-2)}`
+}

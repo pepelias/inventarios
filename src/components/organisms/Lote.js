@@ -1,10 +1,17 @@
 import { DeleteOutlined } from '@ant-design/icons'
 import useField from '../../hooks/useField'
 import { useEffect } from 'react'
+import { timeToString } from '../../helpers/getTimeAgo'
 
-export const Lote = ({ onChange, onRemove, id }) => {
-  const expiration = useField('')
-  const quantity = useField('0')
+export const Lote = ({
+  onChange,
+  onRemove,
+  id,
+  expiration: expire,
+  quantity: qty,
+}) => {
+  const expiration = useField(timeToString(expire))
+  const quantity = useField(qty)
 
   useEffect(() => {
     onChange({

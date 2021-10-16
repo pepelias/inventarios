@@ -7,8 +7,13 @@ export const ProductConfigForm = ({ currentData }) => {
       <h3 className="margin-b">Configurar alertas del producto:</h3>
       <div className="grid-left">
         <label>
-          ¿Cuanto es poco stock?
-          <input type="number" name="low_stock_alert" autoFocus />
+          ¿Cuanto es quiebre de stock?
+          <input
+            type="number"
+            name="low_stock_alert"
+            defaultValue={currentData.low_stock_alert}
+            autoFocus
+          />
         </label>
         <label>
           Medida:

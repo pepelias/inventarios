@@ -2,9 +2,12 @@ import { useState } from 'react'
 import { units } from '../../../helpers/dictionary'
 import { Lote } from '../Lote'
 
-export const ProductExpirationForm = ({ submitMiddleware }) => {
-  const makeEmpty = () => ({ id: Math.round(Math.random() * 9999) })
-  const [lotes, setLotes] = useState([makeEmpty()])
+const makeEmpty = () => ({ id: Math.round(Math.random() * 9999) })
+export const ProductExpirationForm = ({
+  submitMiddleware,
+  currentData: { lotes: lts = [makeEmpty()] },
+}) => {
+  const [lotes, setLotes] = useState(lts)
 
   const onChange = (index) => (data) => {
     setLotes(
@@ -48,7 +51,7 @@ export const ProductExpirationForm = ({ submitMiddleware }) => {
           key={lote.id}
           onChange={onChange(lote.id)}
           onRemove={onRemove(lote.id)}
-          id={lote.id}
+          {...lote}
         />
       ))}
       <a href="#" className="align-center" onClick={addLote}>

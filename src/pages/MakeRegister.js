@@ -4,7 +4,7 @@ import { StepsForm } from '../components/organisms/StepsForm'
 import { ProductStockForm } from '../components/organisms/makeRegister/ProductStockForm'
 import { ProductConfigForm } from '../components/organisms/makeRegister/ProductConfigForm'
 import { addProduct } from '../redux/actionCreators'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { calcExpirationDate } from '../helpers/calcExpiration'
 import {
   ProductExpirationForm,
@@ -14,6 +14,7 @@ import {
 export const MakeRegister = ({ match }) => {
   const dispatch = useDispatch()
   const history = useHistory()
+  const editing = useSelector(({ products }) => products[match.params.code])
   const onSubmit = (data) => {
     console.log(data)
     dispatch(
@@ -49,6 +50,7 @@ export const MakeRegister = ({ match }) => {
             'ProductConfigForm',
           ]}
           onSubmit={onSubmit}
+          initialData={editing}
         />
       </div>
     </main>

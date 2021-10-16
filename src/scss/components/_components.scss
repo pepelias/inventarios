@@ -22,6 +22,17 @@
     }
   }
 }
+.products-list:empty {
+  display: block;
+  &:before {
+    display: block;
+    content: 'Esta lista está vacía';
+    color: var(--metadata-color);
+    text-align: center;
+    padding: $padding * 2 $padding;
+  }
+}
+
 .product-item {
   padding: $margin;
   background: var(--container-gradient);
@@ -32,6 +43,7 @@
   align-items: center;
   gap: $padding;
   box-shadow: $shadow;
+  text-decoration: none;
   h1 {
     font: var(--font-content);
   }

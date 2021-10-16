@@ -4,6 +4,7 @@ import {
   ShoppingCartOutlined,
   WarningOutlined,
 } from '@ant-design/icons'
+import { Link } from 'react-router-dom'
 import { getTimeAgo } from '../../helpers/getTimeAgo'
 
 export const Item = ({
@@ -13,6 +14,7 @@ export const Item = ({
   expiration,
   expirationAlert,
   stockAlert,
+  code,
 }) => {
   let clss = ''
   let AlertIcon = CheckCircleOutlined
@@ -38,7 +40,7 @@ export const Item = ({
   }
 
   return (
-    <div className="product-item">
+    <Link to={`/make/${code}`} className="product-item">
       <div className={`product-item__cover ${clss}`}>
         <AlertIcon />
       </div>
@@ -54,6 +56,6 @@ export const Item = ({
           </span>
         </p>
       </div>
-    </div>
+    </Link>
   )
 }

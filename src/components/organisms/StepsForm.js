@@ -1,13 +1,19 @@
 import { ArrowLeftOutlined } from '@ant-design/icons'
 import { useState } from 'react'
 
-export const StepsForm = ({ steps = {}, handlers = {}, onSubmit, order }) => {
+export const StepsForm = ({
+  steps = {},
+  handlers = {},
+  onSubmit,
+  order,
+  initialData = {},
+}) => {
   if (!order) order = Object.keys(steps)
   const first = order[0]
   const last = order[order.length - 1]
   const middlewares = {}
   const [current, setCurrent] = useState(0)
-  const [currentData, setCurrentData] = useState({})
+  const [currentData, setCurrentData] = useState(initialData)
 
   const stepSubmit = (stepName) => (e) => {
     e.preventDefault()
@@ -17,7 +23,6 @@ export const StepsForm = ({ steps = {}, handlers = {}, onSubmit, order }) => {
       ...currentData,
       ...(handlers[stepName] ? handlers[stepName](data) : data),
     }
-    console.log('seteado', replace)
     setCurrentData(replace)
     if (current !== order.length - 1) return setCurrent(current + 1)
     if (onSubmit) onSubmit(replace)

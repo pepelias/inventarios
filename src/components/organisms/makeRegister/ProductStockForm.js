@@ -1,13 +1,13 @@
-export const ProductStockForm = () => {
+export const ProductStockForm = ({ currentData: { name, comment } }) => {
   return (
     <>
       <label>
         Nombre del producto:
-        <input type="text" name="name" required autoFocus />
+        <input type="text" name="name" defaultValue={name} required autoFocus />
       </label>
       <label>
         Comentario (opcional):
-        <textarea name="comment" />
+        <textarea name="comment" defaultValue={comment} />
       </label>
     </>
   )
