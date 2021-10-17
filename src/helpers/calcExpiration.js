@@ -3,6 +3,7 @@ const day = DATE_UNITS.find(([unit]) => unit === 'day')[1] * 1000
 const month = DATE_UNITS.find(([unit]) => unit === 'month')[1] * 1000
 
 export const calcExpirationDate = (expiration, alertTime) => {
+  if(expiration === 0) return 0
   let discount
   switch (alertTime) {
     case '15d':

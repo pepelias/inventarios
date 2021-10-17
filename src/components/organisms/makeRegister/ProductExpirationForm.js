@@ -70,5 +70,5 @@ export const ProductExpirationFormHandler = (data) => {
     quantity += lote.quantity
   })
 
-  return { ...data, expiration, quantity }
+  return { ...data, expiration: expiration||0, quantity }
 }

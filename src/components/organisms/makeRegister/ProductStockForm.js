@@ -1,4 +1,4 @@
-export const ProductStockForm = ({ currentData: { name, comment } }) => {
+export const ProductStockForm = ({ currentData: { name, comment, code } }) => {
   return (
     <>
       <label>

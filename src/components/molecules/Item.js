@@ -14,7 +14,7 @@ export const Item = ({
   expiration,
   expirationAlert,
   stockAlert,
-  code,
+  id,
 }) => {
   let clss = ''
   let AlertIcon = CheckCircleOutlined
@@ -40,7 +40,7 @@ export const Item = ({
   }
 
   return (
-    <Link to={`/make/${code}`} className="product-item">
+    <Link to={`/make/${id}`} className="product-item">
       <div className={`product-item__cover ${clss}`}>
         <AlertIcon />
       </div>

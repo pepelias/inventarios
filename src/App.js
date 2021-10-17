@@ -1,10 +1,13 @@
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import { DashboardPage } from './pages/DashboardPage'
 import { MakeRegister } from './pages/MakeRegister'
+import { CapturePage } from './pages/CapturePage'
 import { Provider } from 'react-redux'
 import store from './redux/store'
+import { loadProducts } from './redux/actionCreators'
 import './scss/main.scss'
-import { CapturePage } from './pages/CapturePage'
+
+store.dispatch(loadProducts())
 
 function App() {
   return (

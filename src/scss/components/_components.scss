@@ -167,3 +167,31 @@
     flex-direction: row-reverse;
   }
 }
+
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items:center;
+  gap: $margin;
+  padding: $padding;
+  max-width: 500px;
+  margin: $margin auto;
+  color: var(--metadata-color);
+  font-weight: bold;
+  &:before {
+    --size: 50px;
+    content: "";
+    display: block;
+    width: var(--size);
+    height: var(--size);
+    border: 8px solid var(--container-color);
+    border-radius: 50%;
+    border-left-color: var(--metadata-color);
+    animation: rotate .8s linear infinite;
+    @keyframes rotate {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+  }
+}
