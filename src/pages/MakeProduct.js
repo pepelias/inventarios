@@ -1,10 +1,10 @@
 import { LeftOutlined } from '@ant-design/icons'
 import { Link, useHistory } from 'react-router-dom'
 import { StepsForm } from '../components/organisms/StepsForm'
-import { ProductStockForm } from '../components/organisms/makeRegister/ProductStockForm'
+import { ProductSelector } from '../components/organisms/makeRegister/ProductSelector'
 import { ProductConfigForm } from '../components/organisms/makeRegister/ProductConfigForm'
 import { addProduct, editProduct } from '../redux/actionCreators'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { calcExpirationDate } from '../helpers/calcExpiration'
 import {
   ProductExpirationForm,
@@ -14,17 +14,17 @@ import { DataStatus } from '../redux/dataStatus'
 import { Loading } from '../components/molecules/Loading'
 import LoadingModal from '../components/molecules/LoadingModal'
 import { useState } from 'react'
+import useProduct from '../hooks/useProduct'
 
-export const MakeRegister = ({ match }) => {
+const MakeProduct = ({ match }) => {
   const dispatch = useDispatch()
   const history = useHistory()
-  const editing = useSelector(({ products }) => {
-    if(products === DataStatus.Loading) return DataStatus.Loading
-    return products[match.params.code]
-  })
+  const editing = useProduct(match.params.id)
   const [loading, setLoading] = useState()
+
   if(editing === DataStatus.Loading) return <Loading/>
 
+  const code = editing?.code || match.params.id
   const onSubmit = async (data) => {
     data = {
       ...data,
@@ -33,9 +33,8 @@ export const MakeRegister = ({ match }) => {
         data.expiration,
         data.expiration_time_alert
       ),
-      code: editing?.code||match.params.code,
+      code,
     }
-    console.log('Submit', data)
     setLoading(true)
     try {
       await dispatch(editing?editProduct({ ...data, id: editing.id }):addProduct(data))
@@ -54,25 +53,26 @@ export const MakeRegister = ({ match }) => {
         <Link to="/">
           <LeftOutlined />
         </Link>
-        <h1>Añadir nuevo producto</h1>
+        <h1>Editor de producto</h1>
       </header>
       <div className="modal-page__content">
         <h2 className="align-center margin-b-2">
-          Code: {editing?.code || match.params.code}
+          Code: {code}
         </h2>
         <StepsForm
-          steps={{ ProductStockForm, ProductExpirationForm, ProductConfigForm }}
+          steps={{ ProductSelector, ProductExpirationForm, ProductConfigForm }}
           handlers={{ ProductExpirationForm: ProductExpirationFormHandler }}
           order={[
-            'ProductStockForm',
+            'ProductSelector',
             'ProductExpirationForm',
             'ProductConfigForm',
           ]}
           onSubmit={onSubmit}
-          initialData={editing}
+          initialData={{ ...editing,codes: editing?.codes||[code], code }}
         />
       </div>
       {loading && <LoadingModal>Enviando información</LoadingModal>}
     </main>
   )
 }
+export default MakeProduct

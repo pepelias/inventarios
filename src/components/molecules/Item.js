@@ -15,6 +15,8 @@ export const Item = ({
   expirationAlert,
   stockAlert,
   id,
+  concatCode,
+  disabled = false
 }) => {
   let clss = ''
   let AlertIcon = CheckCircleOutlined
@@ -39,8 +41,12 @@ export const Item = ({
     AlertIcon = WarningOutlined
   }
 
+  let url = `/editor/${id}`
+  if(concatCode) url = `/concat-code/${id}/${concatCode}`
+  if(disabled) url = `#disabled`
+
   return (
-    <Link to={`/make/${id}`} className="product-item">
+    <Link to={disabled?'#disabled':url} className="product-item">
       <div className={`product-item__cover ${clss}`}>
         <AlertIcon />
       </div>

@@ -1,24 +1,38 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { units } from '../../../helpers/dictionary'
 import { Lote } from '../Lote'
+import { Item } from '../../molecules/Item'
+import { calcProductAlerts } from '../../../helpers/calcProductAlerts'
 
 const makeEmpty = () => ({ id: Math.round(Math.random() * 9999) })
 export const ProductExpirationForm = ({
   submitMiddleware,
-  currentData: { lotes: lts = [makeEmpty()] },
+  currentData: {
+    lotes: lts,
+    ...currentData
+  },
 }) => {
-  const [lotes, setLotes] = useState(lts)
+  let initialLotes = lts
+  if(!lts || lts.length === 0) initialLotes = [{...makeEmpty(), code: currentData.code}]
+  else if(currentData.concatCode) initialLotes = [...lts,{...makeEmpty(), code: currentData.concatCode}]
+  const [lotes, setLotes] = useState(initialLotes)
+  const [realtimeCalc, setRealtimeCalc] = useState({...currentData, lotes})
 
   const onChange = (index) => (data) => {
-    setLotes(
-      lotes.map((lote) => (index === lote.id ? { ...data, id: lote.id } : lote))
-    )
+    const setLts = lotes.map((lote) => (index === lote.id ? { ...data, id: lote.id } : lote))
+    setLotes(setLts)
   }
 
   const onRemove = (index) => (e) => {
     e.preventDefault()
     setLotes(lotes.filter(({ id }) => index !== id))
   }
+
+  useEffect(() => {
+    setRealtimeCalc(calcProductAlerts(
+      ProductExpirationFormHandler({...currentData, lotes: lotes})
+    ))
+  },[lotes])
 
   const addLote = (e) => {
     e.preventDefault()
@@ -33,12 +47,10 @@ export const ProductExpirationForm = ({
   return (
     <>
       <h2>Fechas de expiración por lotes:</h2>
-      <h3 className="up-content margin-b-2 padding-t-05 metadata-color">
-        Dejar en 0 stock para omitir
-      </h3>
+      <Item {...realtimeCalc} disabled={true} />
       <label className="margin-b">
         Unidad de Medida:
-        <select name="unit">
+        <select name="unit" defaultValue={currentData.unit} disabled={currentData.concatCode}>
           {Object.entries(units).map(([unit, label]) => (
             <option key={unit} value={unit}>
               {label}
@@ -52,23 +64,29 @@ export const ProductExpirationForm = ({
           onChange={onChange(lote.id)}
           onRemove={onRemove(lote.id)}
           {...lote}
+          codes={currentData.codes}
+          concatCode={currentData.concatCode}
         />
       ))}
-      <a href="#" className="align-center" onClick={addLote}>
-        Añadir otra fecha de expiración
-      </a>
+      {!currentData.concatCode && (
+        <a href="#" className="align-center" onClick={addLote}>
+          Añadir otra fecha de expiración
+        </a>
+      )}
     </>
   )
 }
 export const ProductExpirationFormHandler = (data) => {
   let expiration
   let quantity = 0
+  const codes = [...(data.codes||[])]
 
   data.lotes.forEach((lote) => {
     if (!expiration || lote.expiration < expiration)
       expiration = lote.expiration
     quantity += lote.quantity
+    if(!codes.includes(lote.code)) codes.push(lote.code)
   })
 
-  return { ...data, expiration: expiration||0, quantity }
+  return { ...data, expiration: expiration||0, quantity, codes }
 }

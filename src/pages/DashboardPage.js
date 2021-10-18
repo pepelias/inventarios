@@ -3,7 +3,7 @@ import { Footer } from '../components/organisms/Footer'
 import { Inventory } from '../components/organisms/Inventory'
 import { TabsNavigator } from '../components/organisms/TabsNavigator'
 
-export const DashboardPage = () => {
+const DashboardPage = () => {
   return (
     <main className="dashboard">
       <nav className="main-navigator">
@@ -23,3 +23,4 @@ export const DashboardPage = () => {
     </main>
   )
 }
+export default DashboardPage

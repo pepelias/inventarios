@@ -11,7 +11,7 @@ export const addProduct = (product) => async (dispatch) => {
 }
 
 export const editProduct = (product) => async (dispatch) => {
-  const {stockAlert, expirationAlert, ...save} = product
+  const {stockAlert, expirationAlert, concatCode, ...save} = product
   const response = await updateProduct(save)
   dispatch({
     type: actions.SET_PRODUCT,

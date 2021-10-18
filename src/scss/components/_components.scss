@@ -154,6 +154,9 @@
     display: none;
   }
 }
+.no-continue ~ .buttons-container {
+  display: none;
+}
 
 .buttons-container {
   display: flex;
@@ -194,4 +197,14 @@
       }
     }
   }
+}
+
+.hidden {
+  display: none;
+}
+
+.disabled {
+  position: relative;
+  pointer-events: none;
+  opacity: .5;
 }

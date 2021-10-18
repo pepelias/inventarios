@@ -1,15 +1,13 @@
 import { useRef, useEffect, useState } from 'react'
 import Quagga from 'quagga'
-import { useHistory } from 'react-router'
-import { Modal } from '../components/molecules/Modal'
-import useField from '../hooks/useField'
+import { Modal } from '../molecules/Modal'
+import useField from '../../hooks/useField'
 
-export const CapturePage = () => {
+export const CapturePage = ({onDetect}) => {
   const viewport = useRef()
   const [code, setCode] = useState()
   const [showModal, setShowModal] = useState(false)
   const manualCodeInput = useField('')
-  const history = useHistory()
 
   // Inicializar lector
   useEffect(() => {
@@ -35,7 +33,6 @@ export const CapturePage = () => {
       }
     )
     Quagga.onDetected((res) => {
-      console.log(res)
       setCode(res.codeResult.code)
     })
   }, [viewport])
@@ -44,7 +41,7 @@ export const CapturePage = () => {
   useEffect(() => {
     if (!code) return false
     Quagga.stop()
-    history.push(`/make/${code}`)
+    onDetect(code)
   }, [code])
 
   const manualCode = () => setShowModal(!showModal)
@@ -57,7 +54,7 @@ export const CapturePage = () => {
     <div className="capture-page">
       {showModal && (
         <Modal onClose={manualCode}>
-          <form onSubmit={setManualCode}>
+          <div>
             <label>
               Código del producto:
               <input
@@ -68,8 +65,8 @@ export const CapturePage = () => {
                 {...manualCodeInput}
               />
             </label>
-            <button>Continuar</button>
-          </form>
+            <button onClick={setManualCode}>Continuar</button>
+          </div>
         </Modal>
       )}
       <div className="capture-page__viewport" ref={viewport}></div>

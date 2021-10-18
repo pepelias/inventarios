@@ -7,12 +7,13 @@ export const StepsForm = ({
   onSubmit,
   order,
   initialData = {},
+  initialStep = 0
 }) => {
   if (!order) order = Object.keys(steps)
   const first = order[0]
   const last = order[order.length - 1]
   const middlewares = {}
-  const [current, setCurrent] = useState(0)
+  const [current, setCurrent] = useState(initialStep)
   const [currentData, setCurrentData] = useState(initialData)
 
   const stepSubmit = (stepName) => (e) => {

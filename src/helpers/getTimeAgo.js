@@ -30,9 +30,10 @@ export const updateDiff = (timestamp) => {
 }
 
 export const getTimeAgo = (timestamp) => {
+  if(!timestamp) timestamp = Date.now()
   if (Intl.RelativeTimeFormat) {
     const { value, unit } = getDateDiffs(timestamp, Date.now())
-    const rtf = new Intl.RelativeTimeFormat('es', { style: 'short' })
+    const rtf = new Intl.RelativeTimeFormat('es', { style: 'long' })
     return rtf.format(value, unit)
   }
   const date = new Date(timestamp)
