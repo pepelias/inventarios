@@ -6,13 +6,13 @@ import { TabsNavigator } from '../components/organisms/TabsNavigator'
 const DashboardPage = () => {
   return (
     <main className="dashboard">
-      <nav className="main-navigator">
+      <nav className='main-navigator'>
         <h1>Dashboard</h1>
       </nav>
-      <div className="content">
-        <header className="main-header">
-          <h1 className="up-title">Hola Mariela</h1>
-          <h2 className="up-content">Encargada de bodega</h2>
+      <div className='content'>
+        <header className='main-header'>
+          <h1 className='up-title'>Hola Mariela</h1>
+          <h2 className='up-content'>Encargada de bodega</h2>
         </header>
         <TabsNavigator
           tabs={['Alertas', 'Inventario']}

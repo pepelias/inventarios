@@ -1,8 +1,10 @@
 export const units = {
   KG: 'Kilos',
-  LT: 'Litros',
-  PQT: 'Paquetes',
-  UD: 'Unidades',
+  LTS: 'Litros',
+  PQTES: 'Paquetes',
+  UNI: 'Unidades',
   CJS: 'Cajas',
   BLS: 'Bolsas',
+  BDN: 'Bidones',
+  BDJ: 'Bandejas'
 }

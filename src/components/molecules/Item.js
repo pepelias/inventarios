@@ -29,12 +29,12 @@ export const Item = ({
   // Alertar Stock
   if (stockAlert) {
     clss = stockAlert
-    AlertIcon = ShoppingCartOutlined
+      AlertIcon = ShoppingCartOutlined
   }
 
   // DobleAlerta
   if (expirationAlert && stockAlert) {
-    clss =
+      clss =
       expirationAlert === 'error' || stockAlert === 'error'
         ? 'error'
         : 'warning'
