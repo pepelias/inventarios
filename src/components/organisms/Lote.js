@@ -38,7 +38,8 @@ export const Lote = ({
   }
 
   useEffect(() => {
-    if(codeValue === ADD_NEW) return newCode()
+    if (codeValue === '') return false
+    if (codeValue === ADD_NEW) return newCode()
     onChange({
       expiration: new Date(expiration.value).getTime(),
       quantity: parseInt(quantity.value),
@@ -52,20 +53,21 @@ export const Lote = ({
       <div className={`grid-left border padding margin-b${concatCode&&concatCode!==codeValue?' disabled':''}`}>
         <label className="margin-b-05">
           Fecha de expiración:
-          <input type="date" {...expiration} required />
+          <input type='date' {...expiration} required />
         </label>
-        <label className="margin-b-05">
+        <label className='margin-b-05'>
           Cantidad:
-          <input type="number" {...quantity} required />
+          <input type='number' {...quantity} required />
         </label>
-        <button className="icon" onClick={onRemove}>
+        <button className='icon' onClick={onRemove}>
           <DeleteOutlined />
         </button>
-        <label className="margin-b-0" style={{
-            gridColumn: 'span 3'
-          }}>
+        <label className='margin-b-0' style={{
+          gridColumn: 'span 3'
+        }}>
           Código de barras:
-          <select value={codeValue} onChange={onCodeChange} disabled={concatCode!==undefined}>
+          <select value={codeValue} onChange={onCodeChange} required={true} disabled={concatCode !== undefined}>
+            <option value=''>Seleccione</option>
             <option value={ADD_NEW}>Nuevo código</option>
             {codes.map(c => <option key={c} value={c}>{c}</option>)}
           </select>
