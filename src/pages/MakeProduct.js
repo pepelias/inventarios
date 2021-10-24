@@ -22,7 +22,7 @@ const MakeProduct = ({ match }) => {
   const editing = useProduct(match.params.id)
   const [loading, setLoading] = useState()
 
-  if(editing === DataStatus.Loading) return <Loading/>
+  if (editing === DataStatus.Loading) return <Loading />
 
   const code = editing?.code || match.params.id
   const onSubmit = async (data) => {
@@ -37,7 +37,9 @@ const MakeProduct = ({ match }) => {
     }
     setLoading(true)
     try {
-      await dispatch(editing?editProduct({ ...data, id: editing.id }):addProduct(data))
+      await dispatch(
+        editing ? editProduct({ ...data, id: editing.id }) : addProduct(data)
+      )
       setLoading(false)
       history.push('/')
     } catch (err) {
@@ -56,9 +58,7 @@ const MakeProduct = ({ match }) => {
         <h1>Editor de producto</h1>
       </header>
       <div className="modal-page__content">
-        <h2 className="align-center margin-b-2">
-          Code: {code}
-        </h2>
+        <h2 className="align-center margin-b-2">Code: {code}</h2>
         <StepsForm
           steps={{ ProductSelector, ProductExpirationForm, ProductConfigForm }}
           handlers={{ ProductExpirationForm: ProductExpirationFormHandler }}
@@ -68,7 +68,7 @@ const MakeProduct = ({ match }) => {
             'ProductConfigForm',
           ]}
           onSubmit={onSubmit}
-          initialData={{ ...editing,codes: editing?.codes||[code], code }}
+          initialData={{ ...editing, codes: editing?.codes || [code], code }}
         />
       </div>
       {loading && <LoadingModal>Enviando información</LoadingModal>}

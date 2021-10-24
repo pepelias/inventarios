@@ -112,6 +112,7 @@
   > label {
     display: grid;
     grid-template-rows: auto 1fr;
+    height: 100%;
   }
 }
 
@@ -183,7 +184,7 @@
   font-weight: bold;
   &:before {
     --size: 50px;
-    content: "";
+    content: '';
     display: block;
     width: var(--size);
     height: var(--size);
@@ -207,4 +208,21 @@
   position: relative;
   pointer-events: none;
   opacity: .5;
+}
+
+.menu {
+  list-style: none;
+
+  a {
+    display: block;
+    padding: $padding * 1.5;
+    text-decoration: none;
+    display: flex;
+    gap: $padding * 2;
+    font-size: 1.5em;
+  }
+
+  li:not(:last-child) a {
+    border-bottom: $border;
+  }
 }

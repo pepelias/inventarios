@@ -14,9 +14,9 @@ export const Item = ({
   expiration,
   expirationAlert,
   stockAlert,
-  id,
   concatCode,
-  disabled = false
+  disabled = false,
+  code,
 }) => {
   let clss = ''
   let AlertIcon = CheckCircleOutlined
@@ -29,24 +29,24 @@ export const Item = ({
   // Alertar Stock
   if (stockAlert) {
     clss = stockAlert
-      AlertIcon = ShoppingCartOutlined
+    AlertIcon = ShoppingCartOutlined
   }
 
   // DobleAlerta
   if (expirationAlert && stockAlert) {
-      clss =
+    clss =
       expirationAlert === 'error' || stockAlert === 'error'
         ? 'error'
         : 'warning'
     AlertIcon = WarningOutlined
   }
 
-  let url = `/editor/${id}`
-  if(concatCode) url = `/concat-code/${id}/${concatCode}`
-  if(disabled) url = `#disabled`
+  let url = `/editor/${code}`
+  if (concatCode) url = `/concat-code/${code}/${concatCode}`
+  if (disabled) url = `#disabled`
 
   return (
-    <Link to={disabled?'#disabled':url} className="product-item">
+    <Link to={disabled ? '#disabled' : url} className="product-item">
       <div className={`product-item__cover ${clss}`}>
         <AlertIcon />
       </div>

@@ -57,6 +57,10 @@ textarea,
 option {
   color: var(--bg-color);
 }
+[disabled], :disabled {
+  color: var(--metadata-color);
+  opacity: .8;
+}
 
 button,
 .button {

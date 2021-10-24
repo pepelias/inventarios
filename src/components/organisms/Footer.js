@@ -7,7 +7,7 @@ export const Footer = () => {
   const history = useHistory()
   const [capture, setCapture] = useState(false)
   const onDetect = (code) => {
-    history.push(`/editor/${code}`)
+    history.push(`/searchCode/${code}`)
   }
   const show = (e) => {
     e.preventDefault()
@@ -22,5 +22,5 @@ export const Footer = () => {
       </footer>
       {capture && <CapturePage onDetect={onDetect} />}
     </>
-)
+  )
 }

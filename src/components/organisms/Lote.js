@@ -11,10 +11,10 @@ export const Lote = ({
   onRemove,
   id,
   expiration: expire,
-  quantity: qty,
-  codes:cds = [],
+  quantity: qty = 0,
+  codes: cds = [],
   code,
-  concatCode
+  concatCode,
 }) => {
   const expiration = useField(timeToString(expire))
   const quantity = useField(qty)
@@ -27,9 +27,9 @@ export const Lote = ({
   }
 
   const onDetect = (code) => {
-    console.log('Obtuvimos el código',code)
+    console.log('Obtuvimos el código', code)
     setCapture(false)
-    setCodes([...codes,code])
+    setCodes([...codes, code])
     setCodeValue(code)
   }
 
@@ -50,30 +50,46 @@ export const Lote = ({
 
   return (
     <>
-      <div className={`grid-left border padding margin-b${concatCode&&concatCode!==codeValue?' disabled':''}`}>
+      <div
+        className={`grid-left border padding margin-b${
+          concatCode && concatCode !== codeValue ? ' disabled' : ''
+        }`}
+      >
         <label className="margin-b-05">
           Fecha de expiración:
-          <input type='date' {...expiration} required />
+          <input type="date" {...expiration} required />
         </label>
-        <label className='margin-b-05'>
+        <label className="margin-b-05">
           Cantidad:
-          <input type='number' {...quantity} required />
+          <input type="number" {...quantity} required />
         </label>
-        <button className='icon' onClick={onRemove}>
+        <button className="icon" onClick={onRemove}>
           <DeleteOutlined />
         </button>
-        <label className='margin-b-0' style={{
-          gridColumn: 'span 3'
-        }}>
+        <label
+          className="margin-b-0"
+          style={{
+            gridColumn: 'span 3',
+          }}
+        >
           Código de barras:
-          <select value={codeValue} onChange={onCodeChange} required={true} disabled={concatCode !== undefined}>
-            <option value=''>Seleccione</option>
+          <select
+            value={codeValue}
+            onChange={onCodeChange}
+            required={true}
+            disabled={concatCode !== undefined}
+          >
+            <option value="">Seleccione</option>
             <option value={ADD_NEW}>Nuevo código</option>
-            {codes.map(c => <option key={c} value={c}>{c}</option>)}
+            {codes.map((c) => (
+              <option key={c} value={c}>
+                {c}
+              </option>
+            ))}
           </select>
         </label>
       </div>
-      { capture && <CapturePage onDetect={onDetect} /> }
+      {capture && <CapturePage onDetect={onDetect} />}
     </>
   )
 }
