@@ -7,7 +7,7 @@ export const Footer = () => {
   const history = useHistory()
   const [capture, setCapture] = useState(false)
   const onDetect = (code) => {
-    history.push(`/searchCode/${code}`)
+    history.push(`/editor/${code}`)
   }
   const show = (e) => {
     e.preventDefault()

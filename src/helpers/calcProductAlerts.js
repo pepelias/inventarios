@@ -1,5 +1,8 @@
 export const calcProductAlerts = (product) => {
+  console.log('product', product)
   // Alerta de expiración
+  if (product.lotes.length === 0)
+    return { ...product, expirationAlert: false, stockAlert: false }
   product.expirationAlert = (() => {
     const difference = product.expiration_alert_date - Date.now()
     if (product.expiration <= Date.now()) return 'error'

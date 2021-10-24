@@ -15,12 +15,15 @@ import { Loading } from '../components/molecules/Loading'
 import LoadingModal from '../components/molecules/LoadingModal'
 import { useState } from 'react'
 import useProduct from '../hooks/useProduct'
+import SearchCode from './SearchCode'
 
 const MakeProduct = ({ match }) => {
+  const URI = new URL(location.href)
   const dispatch = useDispatch()
   const history = useHistory()
   const editing = useProduct(match.params.id)
   const [loading, setLoading] = useState()
+  const showMenu = !URI.searchParams.get('direct')
 
   if (editing === DataStatus.Loading) return <Loading />
 
@@ -68,10 +71,15 @@ const MakeProduct = ({ match }) => {
             'ProductConfigForm',
           ]}
           onSubmit={onSubmit}
-          initialData={{ ...editing, codes: editing?.codes || [code], code }}
+          initialData={{
+            ...editing,
+            codes: editing && editing.codes ? editing.codes : [code],
+            code,
+          }}
         />
       </div>
       {loading && <LoadingModal>Enviando información</LoadingModal>}
+      {showMenu && editing && <SearchCode {...editing} />}
     </main>
   )
 }

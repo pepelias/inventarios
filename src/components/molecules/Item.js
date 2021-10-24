@@ -17,23 +17,25 @@ export const Item = ({
   concatCode,
   disabled = false,
   code,
+  lotes,
 }) => {
   let clss = ''
   let AlertIcon = CheckCircleOutlined
+  const exists = lotes.length > 0
 
   // Alerta de vencimiento
-  if (expirationAlert) {
+  if (exists && expirationAlert) {
     clss = expirationAlert
     AlertIcon = CalendarOutlined
   }
   // Alertar Stock
-  if (stockAlert) {
+  if (exists && stockAlert) {
     clss = stockAlert
     AlertIcon = ShoppingCartOutlined
   }
 
   // DobleAlerta
-  if (expirationAlert && stockAlert) {
+  if (exists && expirationAlert && stockAlert) {
     clss =
       expirationAlert === 'error' || stockAlert === 'error'
         ? 'error'
@@ -52,15 +54,17 @@ export const Item = ({
       </div>
       <div className="product-item__data">
         <h1>{name}</h1>
-        <p>
-          <span className={stockAlert || ''}>
-            Stock: {quantity}
-            {unit}
-          </span>
-          <span className={expirationAlert || ''}>
-            Vence: {getTimeAgo(expiration)}
-          </span>
-        </p>
+        {exists && (
+          <p>
+            <span className={stockAlert || ''}>
+              Stock: {quantity}
+              {unit}
+            </span>
+            <span className={expirationAlert || ''}>
+              Vence: {getTimeAgo(expiration)}
+            </span>
+          </p>
+        )}
       </div>
     </Link>
   )

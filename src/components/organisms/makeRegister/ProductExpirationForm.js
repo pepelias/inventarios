@@ -44,7 +44,7 @@ export const ProductExpirationForm = ({
 
   // Previo al envío
   submitMiddleware((data) => {
-    return { ...data, lotes }
+    return { ...data, lotes, codes: currentData.codes }
   })
 
   return (
@@ -84,7 +84,7 @@ export const ProductExpirationForm = ({
 export const ProductExpirationFormHandler = (data) => {
   let expiration
   let quantity = 0
-  const codes = [...(data.codes || [])]
+  const codes = data.codes.length > 0 ? [...data.codes] : []
 
   data.lotes.forEach((lote) => {
     if (!expiration || lote.expiration < expiration)

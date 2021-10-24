@@ -38,7 +38,7 @@ export const DiscounterLote = ({ onChange, ...lote }) => {
           Código de barras:
           <input value={lote.code} disabled />
         </label>
-        <label className="margin-b-05" disabled>
+        <label className="margin-b-0" disabled>
           Cantidad final:
           <input type="number" value={quantity} disabled />
         </label>

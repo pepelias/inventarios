@@ -1,20 +1,16 @@
-import useProduct from '../hooks/useProduct'
-import { DataStatus } from '../redux/dataStatus'
-import { Loading } from '../components/molecules/Loading'
-import { Link, useHistory } from 'react-router-dom'
-import { MinusSquareOutlined, PlusSquareOutlined } from '@ant-design/icons'
+import { Link } from 'react-router-dom'
+import {
+  EditOutlined,
+  MinusSquareOutlined,
+  PlusSquareOutlined,
+} from '@ant-design/icons'
 
-const SearchCode = ({ match }) => {
-  const selected = useProduct(match.params.code)
-  const history = useHistory()
-  const code = match.params.code
-  if (selected === DataStatus.Loading) return <Loading />
-  if (!selected) history.push(`/editor/${code}`)
+const SearchCode = ({ name, code, lotes }) => {
   return (
     <div className="modal">
       <div className="modal__container">
         <h1 className="subtitle align-center margin-b">
-          ¿Qué haremos con {selected.name}?
+          ¿Qué haremos con {name}?
         </h1>
         <ul className="menu">
           <li className="menu__item">
@@ -22,9 +18,16 @@ const SearchCode = ({ match }) => {
               <PlusSquareOutlined /> Añadir Stock
             </Link>
           </li>
+          {lotes.length > 0 && (
+            <li className="menu__item">
+              <Link to={`/decrement/${code}/${code}`}>
+                <MinusSquareOutlined /> Restar Stock
+              </Link>
+            </li>
+          )}
           <li className="menu__item">
-            <Link to={`/decrement/${code}/${code}`}>
-              <MinusSquareOutlined /> Restar Stock
+            <Link to={`/editor/${code}?direct=true`}>
+              <EditOutlined /> Editar producto
             </Link>
           </li>
         </ul>
