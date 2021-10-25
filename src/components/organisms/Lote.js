@@ -15,6 +15,8 @@ export const Lote = ({
   codes: cds = [],
   code,
   concatCode,
+  enabled = true,
+  productCode,
 }) => {
   const expiration = useField(timeToString(expire))
   const quantity = useField(qty)
@@ -52,7 +54,7 @@ export const Lote = ({
     <>
       <div
         className={`grid-left border padding margin-b${
-          concatCode && concatCode !== codeValue ? ' disabled' : ''
+          enabled ? '' : ' disabled'
         }`}
       >
         <label className="margin-b-05">
@@ -77,7 +79,7 @@ export const Lote = ({
             value={codeValue}
             onChange={onCodeChange}
             required={true}
-            disabled={concatCode !== undefined}
+            disabled={codeValue === concatCode && codeValue !== productCode}
           >
             <option value="">Seleccione</option>
             <option value={ADD_NEW}>Nuevo código</option>

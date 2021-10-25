@@ -4,7 +4,10 @@ import { Item } from '../../molecules/Item'
 import { calcProductAlerts } from '../../../helpers/calcProductAlerts'
 import { Lote } from '../Lote'
 
-const makeEmpty = () => ({ id: Math.round(Math.random() * 9999) })
+const makeEmpty = () => ({
+  id: Math.round(Math.random() * 9999),
+  enabled: true,
+})
 export const ProductExpirationForm = ({
   submitMiddleware,
   currentData: { lotes: lts, ...currentData },
@@ -26,6 +29,7 @@ export const ProductExpirationForm = ({
 
   const onRemove = (index) => (e) => {
     e.preventDefault()
+    if (!confirm('Desea eliminar este lote?')) return false
     setLotes(lotes.filter(({ id }) => index !== id))
   }
 
@@ -73,6 +77,8 @@ export const ProductExpirationForm = ({
           {...lote}
           codes={currentData.codes}
           concatCode={currentData.concatCode}
+          enabled={!currentData.concatCode || index >= lts.length}
+          productCode={currentData.code}
         />
       ))}
       <a href="#" className="align-center" onClick={addLote}>
