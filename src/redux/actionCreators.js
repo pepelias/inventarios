@@ -1,6 +1,12 @@
 import { calcProductAlerts } from '../helpers/calcProductAlerts'
-import { createProduct, getProducts, updateProduct } from '../services/products'
+import {
+  createProduct,
+  deleteProduct,
+  getProducts,
+  updateProduct,
+} from '../services/products'
 import * as actions from './actions'
+import { DELETE_PRODUCT } from './actions'
 
 export const addProduct = (product) => async (dispatch) => {
   const response = await createProduct(product)
@@ -11,11 +17,11 @@ export const addProduct = (product) => async (dispatch) => {
 }
 
 export const editProduct = (product) => async (dispatch) => {
-  const {stockAlert, expirationAlert, concatCode, ...save} = product
+  const { stockAlert, expirationAlert, concatCode, ...save } = product
   const response = await updateProduct(save)
   dispatch({
     type: actions.SET_PRODUCT,
-    data: calcProductAlerts(response)
+    data: calcProductAlerts(response),
   })
 }
 
@@ -23,6 +29,11 @@ export const loadProducts = () => async (dispatch) => {
   const documents = await getProducts()
   dispatch({
     type: actions.SET_PRODUCTS,
-    data: documents.map(product => calcProductAlerts(product))
+    data: documents.map((product) => calcProductAlerts(product)),
   })
+}
+
+export const removeProduct = (id) => async (dispatch) => {
+  await deleteProduct(id)
+  dispatch({ type: DELETE_PRODUCT, data: id })
 }

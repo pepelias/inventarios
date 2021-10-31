@@ -93,7 +93,7 @@ export const ProductExpirationFormHandler = (data) => {
   const codes = data.codes.length > 0 ? [...data.codes] : []
 
   data.lotes.forEach((lote) => {
-    if (!expiration || lote.expiration < expiration)
+    if (lote.quantity > 0 && (!expiration || lote.expiration < expiration))
       expiration = lote.expiration
     quantity += lote.quantity
     if (!codes.includes(lote.code)) codes.push(lote.code)

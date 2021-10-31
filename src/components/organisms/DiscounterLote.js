@@ -8,9 +8,9 @@ export const DiscounterLote = ({ onChange, ...lote }) => {
 
   const chageDiscount = (e) => {
     let value = e.target.value
-    if (!/[0-9]/.test(value) || value < 0) value = 0
+    if (value !== '' && (!/[0-9]/.test(value) || value < 0)) value = 0
     else if (value > lote.quantity) value = lote.quantity
-    const q = lote.quantity - value
+    const q = lote.quantity - value || 0
     setQuantity(q)
     e.target.value = value
     onChange({ ...lote, quantity: q })

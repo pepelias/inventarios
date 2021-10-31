@@ -1,5 +1,14 @@
 import { database } from './firebase'
-import { addDoc, collection, doc, getDocs, orderBy, query, setDoc } from 'firebase/firestore/lite'
+import {
+  addDoc,
+  collection,
+  deleteDoc,
+  doc,
+  getDocs,
+  orderBy,
+  query,
+  setDoc,
+} from 'firebase/firestore/lite'
 
 const COLLECTION = 'products'
 const collRef = collection(database, COLLECTION)
@@ -14,8 +23,12 @@ export const updateProduct = async (product) => {
   return product
 }
 
+export const deleteProduct = async (id) => {
+  await deleteDoc(doc(collRef, id))
+}
+
 export const getProducts = async () => {
   const q = await query(collRef, orderBy('name'))
   const snapShot = await getDocs(q)
-  return snapShot.docs.map(doc => ({ ...doc.data(), id: doc.id }))
+  return snapShot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
 }

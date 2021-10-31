@@ -212,16 +212,23 @@
 .menu {
   list-style: none;
 
-  a {
-    display: block;
+  a, span.menu__option {
     padding: $padding * 1.5;
     text-decoration: none;
     display: flex;
     gap: $padding * 2;
     font-size: 1.5em;
+    align-items: center;
+    color: var(--metadata-color);
   }
 
   li:not(:last-child) a {
     border-bottom: $border;
   }
+}
+.padding-t, .padding {
+  padding-top: $padding;
+}
+.padding-b, .padding {
+  padding-bottom: $padding;
 }
