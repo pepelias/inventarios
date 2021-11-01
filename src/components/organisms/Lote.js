@@ -50,6 +50,10 @@ export const Lote = ({
     })
   }, [expiration.value, quantity.value, codeValue])
 
+  const focus = (e) => {
+    if (e.target.value === '0') e.target.value = ''
+  }
+
   return (
     <>
       <div
@@ -63,7 +67,7 @@ export const Lote = ({
         </label>
         <label className="margin-b-05">
           Cantidad:
-          <input type="number" {...quantity} required />
+          <input type="number" {...quantity} required onFocus={focus} />
         </label>
         <button className="icon" onClick={onRemove}>
           <DeleteOutlined />

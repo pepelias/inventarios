@@ -33,13 +33,15 @@ export const ProductExpirationForm = ({
     setLotes(lotes.filter(({ id }) => index !== id))
   }
 
-  useEffect(() => {
+  const preview = () => {
     setRealtimeCalc(
       calcProductAlerts(
         ProductExpirationFormHandler({ ...currentData, lotes: lotes })
       )
     )
-  }, [lotes])
+  }
+
+  useEffect(preview, [lotes])
 
   const addLote = (e) => {
     e.preventDefault()

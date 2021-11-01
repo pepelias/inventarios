@@ -1,0 +1,25 @@
+#barcodevideo, #barcodecanvas, #barcodecanvasg {
+  height: 90vh;
+  width: 100vw;
+}
+
+#barcodecanvasg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+#result {
+  font-family: verdana;
+  font-size: 1.5em;
+}
+
+#barcode {
+  position: relative;
+}
+
+#barcodecanvas {
+  display: none;
+}

@@ -16,6 +16,10 @@ export const DiscounterLote = ({ onChange, ...lote }) => {
     onChange({ ...lote, quantity: q })
   }
 
+  const focus = (e) => {
+    if (e.target.value === '0') e.target.value = ''
+  }
+
   return (
     <>
       <div className={`grid-left border padding margin-b`}>
@@ -30,6 +34,7 @@ export const DiscounterLote = ({ onChange, ...lote }) => {
             onChange={chageDiscount}
             max={lote.quantity}
             defaultValue="0"
+            onFocus={focus}
             required
           />
         </label>

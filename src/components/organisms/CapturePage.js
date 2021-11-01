@@ -1,9 +1,8 @@
-import { useRef, useEffect, useState } from 'react'
-import Quagga from 'quagga'
+import { useEffect, useRef, useState } from 'react'
 import { Modal } from '../molecules/Modal'
 import useField from '../../hooks/useField'
 
-export const CapturePage = ({onDetect}) => {
+export const CapturePage = ({ onDetect }) => {
   const viewport = useRef()
   const [code, setCode] = useState()
   const [showModal, setShowModal] = useState(false)
@@ -12,35 +11,20 @@ export const CapturePage = ({onDetect}) => {
   // Inicializar lector
   useEffect(() => {
     if (!viewport.current) return false
-    Quagga.init(
-      {
-        inputStream: {
-          name: 'Live',
-          type: 'LiveStream',
-          target: viewport.current, // Or '#yourElement' (optional)
-        },
-        decoder: {
-          readers: ['ean_reader', 'upc_reader'],
-        },
-      },
-      function (err) {
-        if (err) {
-          console.log(err)
-          return
-        }
-        console.log('Librería quagga inicializada')
-        Quagga.start()
-      }
-    )
-    Quagga.onDetected((res) => {
-      setCode(res.codeResult.code)
+    window.barcode.config.start = 0.1
+    window.barcode.config.end = 0.9
+    window.barcode.config.video = '#barcodevideo'
+    window.barcode.config.canvas = '#barcodecanvas'
+    window.barcode.config.canvasg = '#barcodecanvasg'
+    window.barcode.setHandler(function (barcode) {
+      setCode(barcode)
     })
+    window.barcode.init()
   }, [viewport])
 
   // Obtener codeBar
   useEffect(() => {
     if (!code) return false
-    Quagga.stop()
     onDetect(code)
   }, [code])
 
@@ -69,7 +53,16 @@ export const CapturePage = ({onDetect}) => {
           </div>
         </Modal>
       )}
-      <div className="capture-page__viewport" ref={viewport}></div>
+      <div id="barcode">
+        <video id="barcodevideo" autoPlay></video>
+        <canvas
+          id="barcodecanvasg"
+          width="100%"
+          height="100%"
+          ref={viewport}
+        ></canvas>
+      </div>
+      <canvas id="barcodecanvas"></canvas>
       <footer className="modal-footer">
         <h2>Code: {code || '0000000'}</h2>
         <button onClick={manualCode}>Escribir manualmente</button>
