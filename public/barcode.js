@@ -1,4 +1,4 @@
-const barcode = (function () {
+window.barcode = (function () {
   const localMediaStream = null
   let bars = []
   let handler = null
