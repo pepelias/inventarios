@@ -72,7 +72,7 @@ window.barcode = (function () {
 
     if (navigator.getUserMedia) {
       navigator.getUserMedia(
-        { audio: false, video: true, facingMode: { exact: 'environment' } },
+        { audio: false, video: { facingMode: { exact: 'environment' } } },
         function (stream) {
           elements.video.srcObject = stream
         },
