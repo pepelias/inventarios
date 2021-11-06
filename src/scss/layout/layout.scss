@@ -1,7 +1,7 @@
 .main-navigator {
   padding: $padding * 2 $padding;
   display: grid;
-  grid-template-columns: auto 1fr;
+  grid-template-columns: auto 1fr auto;
   align-items: center;
   gap: 1em;
   button {
@@ -10,6 +10,12 @@
   h1 {
     margin: 0;
     text-align: center;
+  }
+  .profile-image {
+    display: block;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
   }
 }
 .main-header {

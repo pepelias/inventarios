@@ -21,6 +21,11 @@ const DashboardPage = () => {
           <Icon icon={LogoutOutlined} />
         </button>
         <h1>Dashboard</h1>
+        <img
+          className="profile-image"
+          src={user.photoURL}
+          alt={user.displayName}
+        />
       </nav>
       <div className="content">
         <header className="main-header">
