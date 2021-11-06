@@ -57,9 +57,10 @@ textarea,
 option {
   color: var(--bg-color);
 }
-[disabled], :disabled {
+[disabled],
+:disabled {
   color: var(--metadata-color);
-  opacity: .8;
+  opacity: 0.8;
 }
 
 button,
@@ -108,4 +109,13 @@ video {
 
 a {
   color: var(--metadata-color);
+}
+
+.anticon {
+  &:not(:last-child) {
+    margin-right: 0.5em;
+  }
+  &:not(:first-child) {
+    margin-left: 0.5em;
+  }
 }

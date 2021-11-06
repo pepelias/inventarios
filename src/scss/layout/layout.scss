@@ -1,7 +1,16 @@
 .main-navigator {
   padding: $padding * 2 $padding;
-  display: flex;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 1em;
+  button {
+    margin: 0;
+  }
+  h1 {
+    margin: 0;
+    text-align: center;
+  }
 }
 .main-header {
   padding: $padding * 2;
