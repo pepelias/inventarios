@@ -55,31 +55,14 @@ window.barcode = (function () {
     canvasg: '',
   }
 
-  function init() {
-    window.URL = window.URL || window.webkitURL
-    navigator.getUserMedia =
-      navigator.getUserMedia ||
-      navigator.webkitGetUserMedia ||
-      navigator.mozGetUserMedia ||
-      navigator.msGetUserMedia
-
+  async function init(stream) {
     elements.video = document.querySelector(config.video)
     elements.canvas = document.querySelector(config.canvas)
     elements.ctx = elements.canvas.getContext('2d')
     elements.canvasg = document.querySelector(config.canvasg)
     elements.ctxg = elements.canvasg.getContext('2d')
 
-    if (navigator.getUserMedia) {
-      navigator.getUserMedia(
-        { audio: false, video: { facingMode: { exact: 'environment' } } },
-        function (stream) {
-          elements.video.srcObject = stream
-        },
-        function (error) {
-          console.log(error)
-        }
-      )
-    }
+    elements.video.srcObject = stream
 
     elements.video.addEventListener(
       'canplay',
@@ -132,7 +115,7 @@ window.barcode = (function () {
     )
     const rgbpixels = imgd.data
 
-    for (var i = 0, ii = rgbpixels.length; i < ii; i = i + 4) {
+    for (let i = 0, ii = rgbpixels.length; i < ii; i = i + 4) {
       pixels.push(
         Math.round(
           rgbpixels[i] * 0.2126 +
@@ -147,7 +130,7 @@ window.barcode = (function () {
     const min = Math.min.apply(null, pixels)
     const max = Math.max.apply(null, pixels)
 
-    for (var i = 0, ii = pixels.length; i < ii; i++) {
+    for (let i = 0, ii = pixels.length; i < ii; i++) {
       if (
         Math.round(((pixels[i] - min) / (max - min)) * 255) > config.threshold
       ) {
@@ -162,8 +145,8 @@ window.barcode = (function () {
     let current = binary[0]
     let count = 0
 
-    for (var i = 0, ii = binary.length; i < ii; i++) {
-      if (binary[i] == current) {
+    for (let i = 0, ii = binary.length; i < ii; i++) {
+      if (binary[i] === current) {
         count++
       } else {
         pixelBars.push(count)
@@ -181,11 +164,11 @@ window.barcode = (function () {
 
     // find starting sequence
 
-    let startIndex = 0
+    var startIndex = 0
     const minFactor = 0.5
     const maxFactor = 1.5
 
-    for (var i = 3, ii = pixelBars.length; i < ii; i++) {
+    for (let i = 3, ii = pixelBars.length; i < ii; i++) {
       const refLength = (pixelBars[i] + pixelBars[i - 1] + pixelBars[i - 2]) / 3
       if (
         (pixelBars[i] > minFactor * refLength ||
@@ -205,7 +188,7 @@ window.barcode = (function () {
 
     // return if no starting sequence found
 
-    if (startIndex == 0) {
+    if (startIndex === 0) {
       return
     }
 
@@ -219,7 +202,7 @@ window.barcode = (function () {
 
     const ref = (pixelBars[0] + pixelBars[1] + pixelBars[2]) / 3
 
-    for (var i = 0, ii = pixelBars.length; i < ii; i++) {
+    for (let i = 0, ii = pixelBars.length; i < ii; i++) {
       bars.push(Math.round((pixelBars[i] / ref) * 100) / 100)
     }
 
@@ -263,7 +246,7 @@ window.barcode = (function () {
 
     const parities = []
 
-    for (var i = 0; i < 6; i++) {
+    for (let i = 0; i < 6; i++) {
       if (parity(digits[i])) {
         parities.push('o')
       } else {
@@ -277,11 +260,11 @@ window.barcode = (function () {
     const result = []
     let quality = 0
 
-    for (var i = 0, ii = digits.length; i < ii; i++) {
+    for (let i = 0, ii = digits.length; i < ii; i++) {
       let distance = 9
       let bestKey = ''
 
-      for (key in upc) {
+      for (let key in upc) {
         if (maxDistance(digits[i], upc[key]) < distance) {
           distance = maxDistance(digits[i], upc[key])
           bestKey = key
@@ -318,10 +301,10 @@ window.barcode = (function () {
   function normalize(input, total) {
     let sum = 0
     const result = []
-    for (var i = 0, ii = input.length; i < ii; i++) {
+    for (let i = 0, ii = input.length; i < ii; i++) {
       sum = sum + input[i]
     }
-    for (var i = 0, ii = input.length; i < ii; i++) {
+    for (let i = 0, ii = input.length; i < ii; i++) {
       result.push((input[i] / sum) * total)
     }
     return result
@@ -364,7 +347,7 @@ window.barcode = (function () {
 
   function drawBars(binary) {
     for (let i = 0, ii = binary.length; i < ii; i++) {
-      if (binary[i] == 1) {
+      if (binary[i] === 1) {
         elements.ctxg.strokeStyle = '#fff'
       } else {
         elements.ctxg.strokeStyle = '#000'

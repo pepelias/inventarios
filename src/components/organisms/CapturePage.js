@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { Modal } from '../molecules/Modal'
 import useField from '../../hooks/useField'
+import { getVideo } from '../../helpers/mediaStream'
 
 export const CapturePage = ({ onDetect }) => {
   const viewport = useRef()
@@ -19,7 +20,9 @@ export const CapturePage = ({ onDetect }) => {
     window.barcode.setHandler(function (barcode) {
       setCode(barcode)
     })
-    window.barcode.init()
+    getVideo.video().then((stream) => {
+      window.barcode.init(stream)
+    })
   }, [viewport])
 
   // Obtener codeBar
