@@ -17,6 +17,8 @@ module.exports = {
     'react/react-in-jsx-scope': 'off',
     'react/prop-types': 'off',
     'no-case-declarations': 'off',
-    'no-unreachable': 'off'
+    'no-unreachable': 'off',
+    'no-useless-escape': 'off',
+    'no-prototype-builtins': 'off',
   },
 }

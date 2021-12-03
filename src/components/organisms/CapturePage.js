@@ -12,17 +12,70 @@ export const CapturePage = ({ onDetect }) => {
   // Inicializar lector
   useEffect(() => {
     if (!viewport.current) return false
-    window.barcode.config.start = 0.1
-    window.barcode.config.end = 0.9
-    window.barcode.config.video = '#barcodevideo'
-    window.barcode.config.canvas = '#barcodecanvas'
-    window.barcode.config.canvasg = '#barcodecanvasg'
-    window.barcode.setHandler(function (barcode) {
-      console.log('Obtuvimos un barcode')
-      setCode(barcode)
-    })
-    getVideo.video().then((stream) => {
-      window.barcode.init(stream)
+    const canvas = document.createElement('canvas')
+    const video = document.createElement('video')
+    const context = canvas.getContext('2d')
+
+    canvas.style.position = 'absolute'
+    canvas.style.top = '0'
+
+    video.setAttribute('autoplay', '')
+    video.setAttribute('playsinline', '')
+    video.setAttribute('style', 'width: 100%')
+
+    viewport.current.append(canvas, video)
+
+    getVideo
+      .init()
+      .then(() => getVideo.video())
+      .then((stream) => {
+        window.BarcodeScanner.init()
+        window.BarcodeScanner.streamCallback = function ([result]) {
+          console.log('Decoded', result)
+          window.BarcodeScanner.StopStreamDecode()
+          // stream.stop()
+          setCode(result.Value)
+          // onDetect(result.value)
+        }
+
+        video.srcObject = stream
+      })
+      .catch((err) => console.error(err))
+
+    video.addEventListener('loadedmetadata', (e) => {
+      console.log('LoadedMetadata!')
+      const canvasSetting = {
+        x: 50,
+        y: 20,
+        width: 200,
+        height: 30,
+      }
+
+      const rect = video.getBoundingClientRect()
+      canvas.style.height = rect.height + 'px'
+      canvas.style.width = rect.width + 'px'
+      canvas.style.top = rect.top + 'px'
+      canvas.style.left = rect.left + 'px'
+
+      const overlayColor = 'rgba(71, 76, 85, .9)'
+      context.fillStyle = overlayColor
+      context.fillRect(0, 0, rect.width, rect.height)
+      context.clearRect(
+        canvasSetting.x,
+        canvasSetting.y,
+        canvasSetting.width,
+        canvasSetting.height
+      )
+
+      context.strokeStyle = '#ff671f'
+      context.strokeRect(
+        canvasSetting.x,
+        canvasSetting.y,
+        canvasSetting.width,
+        canvasSetting.height
+      )
+      video.play()
+      window.BarcodeScanner.DecodeStream(video)
     })
   }, [viewport])
 
@@ -57,11 +110,12 @@ export const CapturePage = ({ onDetect }) => {
           </div>
         </Modal>
       )}
-      <div id="barcode">
+      <div id="barcode" ref={viewport}></div>
+      {/* <div id="barcode">
         <video id="barcodevideo" autoPlay playsInline={true}></video>
         <canvas id="barcodecanvasg" ref={viewport}></canvas>
       </div>
-      <canvas id="barcodecanvas"></canvas>
+      <canvas id="barcodecanvas"></canvas> */}
       <footer className="modal-footer">
         <h2>Code: {code || '0000000'}</h2>
         <button onClick={manualCode}>Escribir manualmente</button>

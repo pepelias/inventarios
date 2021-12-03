@@ -24,4 +24,6 @@ export const getVideo = new (class {
     await this.init()
     return this.stream
   }
+
+  stop() { this.stream.stop() }
 })()
