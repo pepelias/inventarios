@@ -3,6 +3,7 @@ import { timeToString } from '../../helpers/getTimeAgo'
 import { useState } from 'react'
 
 export const DiscounterLote = ({ onChange, ...lote }) => {
+  console.log('Lote', lote)
   const expiration = useField(timeToString(lote.expiration))
   const [quantity, setQuantity] = useState(lote.quantity)
 
@@ -23,11 +24,13 @@ export const DiscounterLote = ({ onChange, ...lote }) => {
   return (
     <>
       <div className={`grid-left border padding margin-b`}>
-        <label className="margin-b-05" disabled>
-          Fecha de expiración:
-          <input type="date" {...expiration} disabled />
-        </label>
-        <label className="margin-b-05">
+        {!lote.disableExpiration && (
+          <label className="margin-b-05" disabled>
+            Fecha de expiración:
+            <input type="date" {...expiration} disabled />
+          </label>
+        )}
+        <label className={`margin-b-05 ${lote.disableExpiration ? 'span-2' : ''}`}>
           Descontar:
           <input
             type="number"

@@ -19,11 +19,14 @@ export const StepsForm = ({
   const stepSubmit = (stepName) => (e) => {
     e.preventDefault()
     let data = Object.fromEntries(new FormData(e.target))
+    console.log('En Bruto', data)
     if (middlewares[stepName]) data = middlewares[stepName](data)
+    console.log('Middlewares', data)
     const replace = {
       ...currentData,
       ...(handlers[stepName] ? handlers[stepName](data) : data),
     }
+    console.log('handlered', replace)
     setCurrentData(replace)
     if (current !== order.length - 1) return setCurrent(current + 1)
     if (onSubmit) onSubmit(replace)

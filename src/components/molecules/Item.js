@@ -18,6 +18,7 @@ export const Item = ({
   disabled = false,
   code,
   lotes,
+  disableExpiration = false
 }) => {
   let clss = ''
   let AlertIcon = CheckCircleOutlined
@@ -61,7 +62,7 @@ export const Item = ({
               {unit}
             </span>
             <span className={expirationAlert || ''}>
-              Vence: {getTimeAgo(expiration)}
+              {disableExpiration ? 'No expira' : `Vence: ${getTimeAgo(expiration)}`}
             </span>
           </p>
         )}

@@ -18,6 +18,7 @@ export const CapturePage = ({ onDetect }) => {
     window.barcode.config.canvas = '#barcodecanvas'
     window.barcode.config.canvasg = '#barcodecanvasg'
     window.barcode.setHandler(function (barcode) {
+      console.log('Obtuvimos un barcode')
       setCode(barcode)
     })
     getVideo.video().then((stream) => {
@@ -57,13 +58,8 @@ export const CapturePage = ({ onDetect }) => {
         </Modal>
       )}
       <div id="barcode">
-        <video id="barcodevideo" autoPlay></video>
-        <canvas
-          id="barcodecanvasg"
-          width="100%"
-          height="100%"
-          ref={viewport}
-        ></canvas>
+        <video id="barcodevideo" autoPlay playsInline={true}></video>
+        <canvas id="barcodecanvasg" ref={viewport}></canvas>
       </div>
       <canvas id="barcodecanvas"></canvas>
       <footer className="modal-footer">

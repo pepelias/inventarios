@@ -63,6 +63,27 @@ option {
   opacity: 0.8;
 }
 
+input[type="checkbox"] {
+  display: none;
+  + label {
+    margin-bottom: 1em;
+  }
+  + label:before {
+    content: "";
+    display: inline-flex;
+    border: 1px solid;
+    width: 1.2em;
+    height: 1.2em;
+    justify-content: center;
+    align-items: center;
+    vertical-align: middle;
+    margin-right: 0.5em;
+  }
+  &:checked + label:before {
+    content: "✔"
+  }
+}
+
 button,
 .button {
   display: flex;

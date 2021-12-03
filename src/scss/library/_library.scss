@@ -157,3 +157,6 @@ $verticals: (
   }
 }
 @include helpers();
+.span-2 {
+  grid-column: span 2;
+}

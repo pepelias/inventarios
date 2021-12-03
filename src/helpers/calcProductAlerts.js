@@ -4,6 +4,7 @@ export const calcProductAlerts = (product) => {
   if (product.lotes.length === 0)
     return { ...product, expirationAlert: false, stockAlert: false }
   product.expirationAlert = (() => {
+    if(product.expiration === 0) return false
     const difference = product.expiration_alert_date - Date.now()
     if (product.expiration <= Date.now()) return 'error'
     if (difference <= 0) return 'warning'

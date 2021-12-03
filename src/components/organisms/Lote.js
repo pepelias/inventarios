@@ -17,6 +17,7 @@ export const Lote = ({
   concatCode,
   enabled = true,
   productCode,
+  disableExpiration = false
 }) => {
   const expiration = useField(timeToString(expire))
   const quantity = useField(qty)
@@ -29,7 +30,6 @@ export const Lote = ({
   }
 
   const onDetect = (code) => {
-    console.log('Obtuvimos el código', code)
     setCapture(false)
     setCodes([...codes, code])
     setCodeValue(code)
@@ -61,11 +61,13 @@ export const Lote = ({
           enabled ? '' : ' disabled'
         }`}
       >
-        <label className="margin-b-05">
-          Fecha de expiración:
-          <input type="date" {...expiration} required />
-        </label>
-        <label className="margin-b-05">
+        {!disableExpiration && (
+          <label className="margin-b-05">
+            Fecha de expiración:
+            <input type="date" {...expiration} required />
+          </label>
+        )}
+        <label className={`margin-b-05 ${disableExpiration?`span-2`:''}`}>
           Cantidad:
           <input type="number" {...quantity} required onFocus={focus} />
         </label>

@@ -19,6 +19,8 @@ export const ProductExpirationForm = ({
     initialLotes = [...lts, { ...makeEmpty(), code: currentData.concatCode }]
   const [lotes, setLotes] = useState(initialLotes)
   const [realtimeCalc, setRealtimeCalc] = useState({ ...currentData, lotes })
+  const [disableExpiration, setDisableExpiration] = useState(currentData.disableExpiration===true)
+
 
   const onChange = (index) => (data) => {
     const setLts = lotes.map((lote) =>
@@ -36,12 +38,12 @@ export const ProductExpirationForm = ({
   const preview = () => {
     setRealtimeCalc(
       calcProductAlerts(
-        ProductExpirationFormHandler({ ...currentData, lotes: lotes })
+        ProductExpirationFormHandler({ ...currentData, lotes: lotes, disableExpiration })
       )
     )
   }
 
-  useEffect(preview, [lotes])
+  useEffect(preview, [lotes, currentData.name, disableExpiration])
 
   const addLote = (e) => {
     e.preventDefault()
@@ -50,13 +52,18 @@ export const ProductExpirationForm = ({
 
   // Previo al envío
   submitMiddleware((data) => {
-    return { ...data, lotes, codes: currentData.codes }
+    return { ...data, lotes, codes: currentData.codes, disableExpiration }
   })
+
+  // Deshabilitar expiracion
+  const changeExpirationHandler = (e) => {
+    setDisableExpiration(e.target.checked)
+  }
 
   return (
     <>
       <h2>Fechas de expiración por lotes:</h2>
-      <Item {...realtimeCalc} disabled={true} />
+      { realtimeCalc.name && <Item {...realtimeCalc} disabled={true} />}
       <label className="margin-b">
         Unidad de Medida:
         <select
@@ -71,6 +78,8 @@ export const ProductExpirationForm = ({
           ))}
         </select>
       </label>
+      <input type="checkbox" name="unexpire" id="unexpire" defaultChecked={disableExpiration} onChange={changeExpirationHandler} />
+      <label htmlFor="unexpire">No expira</label>
       {lotes.map((lote, index) => (
         <Lote
           key={index}
@@ -81,6 +90,7 @@ export const ProductExpirationForm = ({
           concatCode={currentData.concatCode}
           enabled={!currentData.concatCode || index >= lts.length}
           productCode={currentData.code}
+          disableExpiration={disableExpiration}
         />
       ))}
       <a href="#" className="align-center" onClick={addLote}>
@@ -90,12 +100,13 @@ export const ProductExpirationForm = ({
   )
 }
 export const ProductExpirationFormHandler = (data) => {
-  let expiration
+  let expiration = false
   let quantity = 0
   const codes = data.codes.length > 0 ? [...data.codes] : []
 
   data.lotes.forEach((lote) => {
-    if (lote.quantity > 0 && (!expiration || lote.expiration < expiration))
+    if(data.disableExpiration) expiration = 0
+    else if (lote.quantity > 0 && (!expiration || lote.expiration < expiration))
       expiration = lote.expiration
     quantity += lote.quantity
     if (!codes.includes(lote.code)) codes.push(lote.code)

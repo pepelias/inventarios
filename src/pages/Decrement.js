@@ -48,7 +48,7 @@ const Decrement = ({ match }) => {
       </header>
       <form className="modal-page__content" onSubmit={onSubmit}>
         {product.lotes.map((lote) => (
-          <DiscounterLote key={lote.id} {...lote} onChange={onChange} />
+          <DiscounterLote key={lote.id} {...lote} onChange={onChange} disableExpiration={product.disableExpiration} />
         ))}
         <button>Completar</button>
       </form>

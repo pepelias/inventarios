@@ -26,11 +26,15 @@ export const editProduct = (product) => async (dispatch) => {
 }
 
 export const loadProducts = () => async (dispatch) => {
-  const documents = await getProducts()
-  dispatch({
-    type: actions.SET_PRODUCTS,
-    data: documents.map((product) => calcProductAlerts(product)),
-  })
+  try {
+    const documents = await getProducts()
+    dispatch({
+      type: actions.SET_PRODUCTS,
+      data: documents.map((product) => calcProductAlerts(product)),
+    })
+  } catch(err) {
+    console.error(err)
+  }
 }
 
 export const removeProduct = (id) => async (dispatch) => {
